@@ -12,47 +12,13 @@
     <property name="step_increment">0.10000000000000001</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkListStore" id="method_store">
+  <object class="GtkEntryBuffer" id="entrybuffer1"/>
+  <object class="GtkEntryBuffer" id="entrybuffer2"/>
+  <object class="GtkListStore" id="location_store">
     <columns>
-      <!-- column-name gchararray1 -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">holm</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">hochberg</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">hommel</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">bonferroni</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">BH</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">BY</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">fdr</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">sidak</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">None</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkEntryBuffer" id="pval_entry_buffer"/>
-  <object class="GtkListStore" id="pval_store">
-    <columns>
-      <!-- column-name orig_pval -->
+      <!-- column-name lat -->
       <column type="gdouble"/>
-      <!-- column-name modified_pval -->
+      <!-- column-name lon -->
       <column type="gdouble"/>
     </columns>
   </object>
@@ -173,108 +139,6 @@
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkBox" id="box4">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkBox" id="box5">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkLabel" id="label1">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="xpad">6</property>
-                        <property name="ypad">6</property>
-                        <property name="label" translatable="yes">Correction:</property>
-                        <property name="width_chars">0</property>
-                        <property name="single_line_mode">True</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkComboBox" id="combobox1">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="model">method_store</property>
-                        <property name="active">8</property>
-                        <property name="id_column">0</property>
-                        <signal name="changed" handler="pval__method_changed" swapped="no"/>
-                        <child>
-                          <object class="GtkCellRendererText" id="cellrenderertext1"/>
-                          <attributes>
-                            <attribute name="visible">0</attribute>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox" id="box8">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkLabel" id="label2">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Alpha value:</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSpinButton" id="alpha_button">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="adjustment">adjustment2</property>
-                        <property name="climb_rate">0.10000000000000001</property>
-                        <property name="digits">2</property>
-                        <property name="numeric">True</property>
-                        <signal name="value-changed" handler="pval__alpha_value_changed" swapped="no"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">3</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkBox" id="box3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -289,13 +153,14 @@
                         <property name="can_focus">True</property>
                         <property name="shadow_type">in</property>
                         <child>
-                          <object class="GtkTreeView" id="pval_view">
+                          <object class="GtkTreeView" id="location_view">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="vadjustment">adjustment1</property>
                             <property name="vscroll_policy">natural</property>
-                            <property name="model">pval_store</property>
+                            <property name="model">location_store</property>
                             <property name="search_column">0</property>
+                            <property name="enable_grid_lines">both</property>
                             <signal name="key-release-event" handler="pval__key_released" swapped="no"/>
                             <child internal-child="selection">
                               <object class="GtkTreeSelection" id="treeview-selection">
@@ -304,7 +169,7 @@
                             </child>
                             <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn1">
-                                <property name="title" translatable="yes">Original pval</property>
+                                <property name="title" translatable="yes">Lat</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext2"/>
                                   <attributes>
@@ -315,7 +180,7 @@
                             </child>
                             <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn2">
-                                <property name="title" translatable="yes">Modified pval</property>
+                                <property name="title" translatable="yes">Lon</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext3"/>
                                   <attributes>
@@ -339,7 +204,7 @@
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkButton" id="button1">
-                            <property name="label" translatable="yes">Add pvals</property>
+                            <property name="label" translatable="yes">Add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
@@ -352,15 +217,42 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="pval_entry">
+                          <object class="GtkEntry" id="entry1">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="buffer">pval_entry_buffer</property>
+                            <property name="buffer">entrybuffer1</property>
+                            <property name="max_length">5</property>
+                            <property name="xalign">0.019999999552965164</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkEntry" id="entry2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="buffer">entrybuffer2</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToggleButton" id="togglebutton1">
+                            <property name="label" translatable="yes">Pick</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                       </object>
@@ -379,7 +271,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="plot__box">
+                  <object class="GtkBox" id="plot_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
@@ -405,7 +297,7 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
+                    <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
@@ -444,6 +336,42 @@
       </object>
     </child>
   </object>
+  <object class="GtkListStore" id="method_store">
+    <columns>
+      <!-- column-name gchararray1 -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">holm</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">hochberg</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">hommel</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">bonferroni</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">BH</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">BY</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">fdr</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">sidak</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkEntryBuffer" id="pval_entry_buffer"/>
   <object class="GtkDialog" id="unsaved_changes_dialog">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>

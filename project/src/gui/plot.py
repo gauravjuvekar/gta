@@ -14,6 +14,8 @@ import numpy as np
 #Possibly this rendering backend is broken currently
 #from matplotlib.backends.backend_gtk3agg import FigureCanvasGTK3Agg as FigureCanvas
 from matplotlib.backends.backend_gtk3cairo import FigureCanvasGTK3Cairo as FigureCanvas
+from matplotlib.backends.backend_gtk3 import NavigationToolbar2GTK3 as NavigationToolbar
+
 
 
 import pickle
@@ -25,11 +27,12 @@ class PlotHandler(gui.handlers.BaseHandlers):
     def __init__(self, *args, **kwargs):
         super(PlotHandler, self).__init__(*args, **kwargs)
 
-        with open('osmnx_graph_pune', 'rb') as f:
+        with open('osmnx_pune_1km', 'rb') as f:
             self.graph = pickle.load(f)
 
         builder = self.state.builder
         sw = builder.get_object('GraphArea')
+        nav_box_holder = builder.get_object('plot_box')
 
         fig, ax = osmnx.plot_graph(self.graph, show=False)
 
@@ -52,4 +55,7 @@ class PlotHandler(gui.handlers.BaseHandlers):
         ax.plot()
 
         canvas = FigureCanvas(fig)
+        window = builder.get_object('AppWin')
+        toolbar = NavigationToolbar(canvas, window)
+        nav_box_holder.pack_start(toolbar, False, True, 1)
         sw.add_with_viewport(canvas)
