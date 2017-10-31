@@ -24,6 +24,12 @@ import osmnx
 
 
 class PlotHandler(gui.handlers.BaseHandlers):
+    def canvas_click(self, event):
+        print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
+                  ('double' if event.dblclick else 'single', event.button,
+                   event.x, event.y, event.xdata, event.ydata))
+
+
     def __init__(self, *args, **kwargs):
         super(PlotHandler, self).__init__(*args, **kwargs)
 
@@ -55,6 +61,7 @@ class PlotHandler(gui.handlers.BaseHandlers):
         ax.plot()
 
         canvas = FigureCanvas(fig)
+        canvas.mpl_connect('button_release_event', self.canvas_click)
         window = builder.get_object('AppWin')
         toolbar = NavigationToolbar(canvas, window)
         nav_box_holder.pack_start(toolbar, False, True, 1)
