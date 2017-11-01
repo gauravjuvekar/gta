@@ -25,10 +25,19 @@ import osmnx
 
 class PlotHandler(gui.handlers.BaseHandlers):
     def canvas_click(self, event):
-        print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
+        builder = self.state.builder
+        toggle = builder.get_object('pick_location_toggle')
+        if toggle.get_active():
+            print('%s click: button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
                   ('double' if event.dblclick else 'single', event.button,
                    event.x, event.y, event.xdata, event.ydata))
-
+            lat = event.ydata
+            lon = event.xdata
+            lat_box = builder.get_object('lat_entry')
+            lon_box = builder.get_object('lon_entry')
+            lat_box.set_text(str(lat))
+            lon_box.set_text(str(lon))
+            toggle.set_active(False)
 
     def __init__(self, *args, **kwargs):
         super(PlotHandler, self).__init__(*args, **kwargs)

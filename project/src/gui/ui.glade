@@ -217,7 +217,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry1">
+                          <object class="GtkEntry" id="lat_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="buffer">entrybuffer1</property>
@@ -231,7 +231,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry2">
+                          <object class="GtkEntry" id="lon_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="buffer">entrybuffer2</property>
@@ -243,7 +243,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkToggleButton" id="togglebutton1">
+                          <object class="GtkToggleButton" id="pick_location_toggle">
                             <property name="label" translatable="yes">Pick</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>

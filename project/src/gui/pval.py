@@ -12,24 +12,24 @@ import state
 
 class PvalHandlers(gui.handlers.BaseHandlers):
     def pval__add(self, *args):
-        store = self.state.builder.get_object('pval_store')
-        entry = self.state.builder.get_object('pval_entry')
-        text = entry.get_text()
+        store = self.state.builder.get_object('location_store')
+        lat = self.state.builder.get_object('lat_entry')
+        lon = self.state.builder.get_object('lon_entry')
         try:
-            values = [float(x.strip()) for x in text.split(',')]
+            lat_val, lon_val = float(lat.get_text()), float(lon.get_text())
         except ValueError:
             pass
         else:
-            for val in values:
-                store.append([val, 0])
-            entry.set_text('')
+            store.append([lat_val, lon_val])
+            lat.set_text('')
+            lon.set_text('')
             self.state.unsaved_changes = True
             self.pval__refresh()
 
     def pval__key_released(self, widget, event, *args):
         keyname = Gdk.keyval_name(event.keyval)
         if keyname == 'Delete':
-            view = self.state.builder.get_object('pval_view')
+            view = self.state.builder.get_object('location_view')
             selection = view.get_selection()
             model, paths = selection.get_selected_rows()
             for path in reversed(paths):
