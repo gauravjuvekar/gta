@@ -49,29 +49,13 @@ class PlotHandler(gui.handlers.BaseHandlers):
         sw = builder.get_object('GraphArea')
         nav_box_holder = builder.get_object('plot_box')
 
-        fig, ax = osmnx.plot_graph(self.graph, show=False)
+        self.fig, self.ax = osmnx.plot_graph(self.graph, show=False)
 
-        # fig = matplotlib.figure.Figure(figsize=(5, 5), dpi=100)
-        # ax = fig.add_subplot(111, projection='polar')
+        self.ax.plot()
 
-
-
-        # N = 20
-        # theta = np.linspace(0.0, 2 * np.pi, N, endpoint=False)
-        # radii = 10 * np.random.rand(N)
-        # width = np.pi / 4 * np.random.rand(N)
-
-        # bars = ax.bar(theta, radii, width=width, bottom=0.0)
-
-        # for r, bar in zip(radii, bars):
-            # bar.set_facecolor(matplotlib.cm.jet(r / 10.))
-            # bar.set_alpha(0.5)
-
-        ax.plot()
-
-        canvas = FigureCanvas(fig)
-        canvas.mpl_connect('button_release_event', self.canvas_click)
+        self.canvas = FigureCanvas(self.fig)
+        self.canvas.mpl_connect('button_release_event', self.canvas_click)
         window = builder.get_object('AppWin')
-        toolbar = NavigationToolbar(canvas, window)
+        toolbar = NavigationToolbar(self.canvas, window)
         nav_box_holder.pack_start(toolbar, False, True, 1)
-        sw.add_with_viewport(canvas)
+        sw.add_with_viewport(self.canvas)

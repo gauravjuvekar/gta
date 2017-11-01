@@ -12,14 +12,14 @@
     <property name="step_increment">0.10000000000000001</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkEntryBuffer" id="entrybuffer1"/>
-  <object class="GtkEntryBuffer" id="entrybuffer2"/>
   <object class="GtkListStore" id="location_store">
     <columns>
       <!-- column-name lat -->
       <column type="gdouble"/>
       <!-- column-name lon -->
       <column type="gdouble"/>
+      <!-- column-name id -->
+      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkApplicationWindow" id="AppWin">
@@ -168,23 +168,38 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkTreeViewColumn" id="treeviewcolumn1">
-                                <property name="title" translatable="yes">Lat</property>
+                              <object class="GtkTreeViewColumn" id="treeviewcolumn3">
+                                <property name="sizing">autosize</property>
+                                <property name="min_width">0</property>
+                                <property name="title" translatable="yes">id</property>
                                 <child>
-                                  <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                                  <object class="GtkCellRendererText" id="cellrenderertext1"/>
                                   <attributes>
-                                    <attribute name="text">0</attribute>
+                                    <attribute name="text">2</attribute>
                                   </attributes>
                                 </child>
                               </object>
                             </child>
                             <child>
                               <object class="GtkTreeViewColumn" id="treeviewcolumn2">
+                                <property name="sizing">autosize</property>
                                 <property name="title" translatable="yes">Lon</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext3"/>
                                   <attributes>
                                     <attribute name="text">1</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="treeviewcolumn1">
+                                <property name="sizing">autosize</property>
+                                <property name="title" translatable="yes">Lat</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext2"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
                                   </attributes>
                                 </child>
                               </object>
@@ -220,9 +235,6 @@
                           <object class="GtkEntry" id="lat_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="buffer">entrybuffer1</property>
-                            <property name="max_length">5</property>
-                            <property name="xalign">0.019999999552965164</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -234,7 +246,6 @@
                           <object class="GtkEntry" id="lon_entry">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="buffer">entrybuffer2</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -371,7 +382,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkEntryBuffer" id="pval_entry_buffer"/>
   <object class="GtkDialog" id="unsaved_changes_dialog">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
