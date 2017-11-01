@@ -42,7 +42,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             self.pvals[self.last_id] = {
                 'x': x, 'y': y,
                 'plot_point': plot_point}
-            store.append([x, y, self.last_id])
+            store.append([self.last_id, x, y])
             self.last_id += 1
             lat.set_text('')
             lon.set_text('')
@@ -57,7 +57,18 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             model, paths = selection.get_selected_rows()
             for path in reversed(paths):
                 itr = model.get_iter(path)
+                print(path, itr)
+                pval_id = model.get_value(itr, 0)
+                print("removing", pval_id)
+                pval = self.pvals[pval_id]
+                # import pdb
+                # pdb.set_trace()
+                pval['plot_point'][0].remove()
+                del self.pvals[pval_id]
+                # self.ax.remove()
                 model.remove(itr)
+            print("Redrawing canvas", pval_id)
+            self.fig.canvas.draw()
 
     def pval__refresh(self, *args):
         print("Refreshed view")

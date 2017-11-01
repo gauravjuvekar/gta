@@ -14,12 +14,12 @@
   </object>
   <object class="GtkListStore" id="location_store">
     <columns>
+      <!-- column-name id -->
+      <column type="gint"/>
       <!-- column-name lat -->
       <column type="gdouble"/>
       <!-- column-name lon -->
       <column type="gdouble"/>
-      <!-- column-name id -->
-      <column type="gint"/>
     </columns>
   </object>
   <object class="GtkApplicationWindow" id="AppWin">
@@ -175,7 +175,7 @@
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext1"/>
                                   <attributes>
-                                    <attribute name="text">2</attribute>
+                                    <attribute name="text">0</attribute>
                                   </attributes>
                                 </child>
                               </object>
@@ -199,7 +199,7 @@
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext2"/>
                                   <attributes>
-                                    <attribute name="text">0</attribute>
+                                    <attribute name="text">2</attribute>
                                   </attributes>
                                 </child>
                               </object>
