@@ -41,7 +41,8 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
             self.pvals[self.last_id] = {
                 'x': x, 'y': y,
-                'plot_point': plot_point}
+                'plot_point': plot_point,
+                'node': nearest_node}
             store.append([self.last_id, x, y])
             self.last_id += 1
             lat.set_text('')
@@ -72,6 +73,10 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
     def pval__refresh(self, *args):
         print("Refreshed view")
+        for key, val in self.pvals:
+            pass
+            # val['node'] is the actual networkx node
+
         pass
 
     def pval__alpha_value_changed(self, *args):
