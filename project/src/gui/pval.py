@@ -77,6 +77,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
         print("Refreshed view")
         pair_dist = {}
         for key1 in self.pvals:
+            pair_dist[key1] = {k
             for key2 in self.pvals:
                 p1 = self.pvals[key1]['node']
                 p2 = self.pvals[key2]['node']
@@ -85,10 +86,31 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                     self.graph, source=p1, target=p2, weight='length')
                 path_length = nx.shortest_path_length(
                     self.graph, source=p1, target=p2, weight='length')
-                pair_dist[(key1, key2)] = {'length': path_length,
-                                           'route': path}
+                pair_dist[key1][key2] = {'length': path_length}
+                                         # 'route': path}
 
         pprint.pprint(pair_dist)
+
+        threshold = 100
+        pairs = {}
+        for key1 in pair_dist:
+            if key1 == 0:
+                continue
+            direct = pair_dist[key1][0]['length']
+            for key2 in pair_dist[key1]:
+                if key2 == 0:
+                    continue
+                if key1 == key2:
+                    continue
+                combined = (pair_dist[key1][key2]['length'] +
+                            pair_dist[key2][0]['length'])
+                out_of_way = combined - direct
+                if out_of_way < threshold:
+                    pairs[(key1, key2)] = out_of_way
+
+        print("with out_of_way threshold < 100m")
+        print("Matchings: out of way distance")
+        pprint.pprint(pairs)
 
     def pval__alpha_value_changed(self, *args):
         self.pval__refresh()
