@@ -44,6 +44,7 @@ class PlotHandler(gui.handlers.BaseHandlers):
 
         with open('osmnx_pune_1km', 'rb') as f:
             self.graph = pickle.load(f)
+            self.graph = osmnx.core.add_edge_lengths(self.graph)
 
         builder = self.state.builder
         sw = builder.get_object('GraphArea')

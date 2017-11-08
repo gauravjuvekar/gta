@@ -7,9 +7,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 import osmnx
+import networkx as nx
 
 import gui
 import state
+import pprint
 
 
 class PvalHandlers(gui.handlers.BaseHandlers):
@@ -73,11 +75,20 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
     def pval__refresh(self, *args):
         print("Refreshed view")
-        for key, val in self.pvals:
-            pass
-            # val['node'] is the actual networkx node
+        pair_dist = {}
+        for key1 in self.pvals:
+            for key2 in self.pvals:
+                p1 = self.pvals[key1]['node']
+                p2 = self.pvals[key2]['node']
 
-        pass
+                path = nx.shortest_path(
+                    self.graph, source=p1, target=p2, weight='length')
+                path_length = nx.shortest_path_length(
+                    self.graph, source=p1, target=p2, weight='length')
+                pair_dist[(key1, key2)] = {'length': path_length,
+                                           'route': path}
+
+        pprint.pprint(pair_dist)
 
     def pval__alpha_value_changed(self, *args):
         self.pval__refresh()
