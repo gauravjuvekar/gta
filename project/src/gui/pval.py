@@ -39,13 +39,14 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             else:
                 plot_style = 'bo'
             plot_point = self.ax.plot(x, y, plot_style)
+            self.ax.text(x, y, str(self.last_id), color="red", fontsize=12)
             self.fig.canvas.draw()
 
             self.pvals[self.last_id] = {
                 'x': x, 'y': y,
                 'plot_point': plot_point,
                 'node': nearest_node}
-            store.append([self.last_id, x, y])
+            store.append([self.last_id, x, y, self.last_id, 0.0])
             self.last_id += 1
             lat.set_text('')
             lon.set_text('')
@@ -82,8 +83,8 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                 p1 = self.pvals[key1]['node']
                 p2 = self.pvals[key2]['node']
 
-                path = nx.shortest_path(
-                    self.graph, source=p1, target=p2, weight='length')
+                # path = nx.shortest_path(
+                    # self.graph, source=p1, target=p2, weight='length')
                 path_length = nx.shortest_path_length(
                     self.graph, source=p1, target=p2, weight='length')
                 pair_dist[key1][key2] = {'length': path_length}
@@ -93,6 +94,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
         threshold = 100
         pairs = {}
+        compatibility = nx.Graph()
         for key1 in pair_dist:
             if key1 == 0:
                 continue
@@ -107,10 +109,27 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                 out_of_way = combined - direct
                 if out_of_way < threshold:
                     pairs[(key1, key2)] = out_of_way
+                    compatibility.add_edge(key1, key2, neg_length=-out_of_way)
 
         print("with out_of_way threshold < 100m")
-        print("Matchings: out of way distance")
+        print("Pairs: out of way distance")
         pprint.pprint(pairs)
+
+        matching = nx.algorithms.matching.max_weight_matching(
+            compatibility,
+            maxcardinality=True,
+            weight='neg_length')
+        store = self.state.builder.get_object('location_store')
+
+        for i, row in enumerate(store):
+            store[i] = store[i][0:3] + [i, 0.0]
+
+        print("Matching")
+        pprint.pprint(matching)
+        for start, end in matching.items():
+            dist = compatibility.get_edge_data(start, end)['neg_length']
+            dist = abs(dist)
+            store[start] = store[start][0:3] + [end, dist]
 
     def pval__alpha_value_changed(self, *args):
         self.pval__refresh()
