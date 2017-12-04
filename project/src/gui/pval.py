@@ -37,7 +37,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             if self.last_id == 0:
                 plot_style = 'ro'
             else:
-                plot_style = 'r+'
+                plot_style = 'bo'
             plot_point = self.ax.plot(x, y, plot_style)
             self.fig.canvas.draw()
 
