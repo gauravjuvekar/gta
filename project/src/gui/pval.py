@@ -77,7 +77,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
         print("Refreshed view")
         pair_dist = {}
         for key1 in self.pvals:
-            pair_dist[key1] = {k
+            pair_dist[key1] = {}
             for key2 in self.pvals:
                 p1 = self.pvals[key1]['node']
                 p2 = self.pvals[key2]['node']
