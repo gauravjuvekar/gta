@@ -20,6 +20,10 @@
       <column type="gdouble"/>
       <!-- column-name lon -->
       <column type="gdouble"/>
+      <!-- column-name go_with -->
+      <column type="gint"/>
+      <!-- column-name out_of_way -->
+      <column type="gdouble"/>
     </columns>
   </object>
   <object class="GtkApplicationWindow" id="AppWin">
@@ -200,6 +204,28 @@
                                   <object class="GtkCellRendererText" id="cellrenderertext2"/>
                                   <attributes>
                                     <attribute name="text">2</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="treeviewcolumn4">
+                                <property name="title" translatable="yes">Go with</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext4"/>
+                                  <attributes>
+                                    <attribute name="text">3</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="treeviewcolumn5">
+                                <property name="title" translatable="yes">Out of way dist</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="cellrenderertext5"/>
+                                  <attributes>
+                                    <attribute name="text">4</attribute>
                                   </attributes>
                                 </child>
                               </object>

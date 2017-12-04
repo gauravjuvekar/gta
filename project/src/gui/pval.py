@@ -45,7 +45,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                 'x': x, 'y': y,
                 'plot_point': plot_point,
                 'node': nearest_node}
-            store.append([self.last_id, x, y])
+            store.append([self.last_id, x, y, self.last_id, 0.0])
             self.last_id += 1
             lat.set_text('')
             lon.set_text('')
@@ -93,6 +93,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
         threshold = 100
         pairs = {}
+        final_map = {}
         for key1 in pair_dist:
             if key1 == 0:
                 continue
@@ -107,10 +108,20 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                 out_of_way = combined - direct
                 if out_of_way < threshold:
                     pairs[(key1, key2)] = out_of_way
+                    final_map[key1] = (key2, out_of_way)
+                    final_map[key2] = (key1, out_of_way)
 
         print("with out_of_way threshold < 100m")
         print("Matchings: out of way distance")
         pprint.pprint(pairs)
+
+        import pdb
+        pdb.set_trace()
+        store = self.state.builder.get_object('location_store')
+        for i, row in enumerate(store):
+            idx = row[0]
+            if idx in final_map:
+                store[i] = row[0:3] + list(final_map[idx])
 
     def pval__alpha_value_changed(self, *args):
         self.pval__refresh()
