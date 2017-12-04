@@ -82,8 +82,8 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                 p1 = self.pvals[key1]['node']
                 p2 = self.pvals[key2]['node']
 
-                path = nx.shortest_path(
-                    self.graph, source=p1, target=p2, weight='length')
+                # path = nx.shortest_path(
+                    # self.graph, source=p1, target=p2, weight='length')
                 path_length = nx.shortest_path_length(
                     self.graph, source=p1, target=p2, weight='length')
                 pair_dist[key1][key2] = {'length': path_length}
@@ -93,7 +93,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
         threshold = 100
         pairs = {}
-        final_map = {}
+        compatibility = nx.Graph()
         for key1 in pair_dist:
             if key1 == 0:
                 continue
@@ -108,20 +108,24 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                 out_of_way = combined - direct
                 if out_of_way < threshold:
                     pairs[(key1, key2)] = out_of_way
-                    final_map[key1] = (key2, out_of_way)
-                    final_map[key2] = (key1, out_of_way)
+                    compatibility.add_edge(key1, key2, neg_length=-out_of_way)
 
         print("with out_of_way threshold < 100m")
-        print("Matchings: out of way distance")
+        print("Pairs: out of way distance")
         pprint.pprint(pairs)
 
-        import pdb
-        pdb.set_trace()
+        matching = nx.algorithms.matching.max_weight_matching(
+            compatibility,
+            maxcardinality=True,
+            weight='neg_length')
         store = self.state.builder.get_object('location_store')
-        for i, row in enumerate(store):
-            idx = row[0]
-            if idx in final_map:
-                store[i] = row[0:3] + list(final_map[idx])
+
+        print("Matching")
+        pprint.pprint(matching)
+        for start, end in matching.items():
+            dist = compatibility.get_edge_data(start, end)['neg_length']
+            dist = abs(dist)
+            store[start] = store[start][0:3] + [end, dist]
 
     def pval__alpha_value_changed(self, *args):
         self.pval__refresh()
