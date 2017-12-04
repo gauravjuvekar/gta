@@ -39,6 +39,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             else:
                 plot_style = 'bo'
             plot_point = self.ax.plot(x, y, plot_style)
+            self.ax.text(x, y, str(self.last_id), color="red", fontsize=12)
             self.fig.canvas.draw()
 
             self.pvals[self.last_id] = {
@@ -119,6 +120,9 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             maxcardinality=True,
             weight='neg_length')
         store = self.state.builder.get_object('location_store')
+
+        for i, row in enumerate(store):
+            store[i] = store[i][0:3] + [i, 0.0]
 
         print("Matching")
         pprint.pprint(matching)
