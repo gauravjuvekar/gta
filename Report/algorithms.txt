@@ -1,0 +1,16 @@
+All pairs shortest path distances are found on the selected nodes in the graph.
+
+These shortest distances form a complete directed (distance may differ due to road features such as one-ways) graph which captures the required details of the actual road network.
+
+Next, feasible pairs of drivers are chosen based on a threshold limit that drivers are willing to go out of their way to pick up another person. The algorithm is as:
+
+For every pair Vi, Vj of distinct nodes:
+		extra_dist_1 = abs(dist(Vi->Vj) + dist(Vj->dest) - dist(Vi->Dest))
+		extra_dist_2 = abs(dist(Vj->Vi) + dist(Vi->dest) - dist(Vj->Dest))
+		extra_dist = min(extra_dist_1, extra_dist_2)
+		if extra_dist < threshold:
+			Add (Vi--Vj) to a undirected graph G with edge weight = extra_dist
+
+This new graph shows feasible pairs of drivers connected by an edge, with the edge weights showing extra distance that need to be travelled.
+Since our assumption is based on only two drivers pairing up to share a ride, we can now chose pairs from this graph using maximum matching.
+Out of all possible maximum matchings on graph G, we pick the one that minimizes sum of edge weights.

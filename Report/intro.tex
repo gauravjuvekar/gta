@@ -1,0 +1,55 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+\section{Introduction}
+The carpooling recommendation has become one of the major problems of traffic
+congestion and environmental pollution in big cities and hence to sort that out,
+considering various graph based algorithms we have tried to come up with a novel
+method to resolve the same.
+
+A lot of car sharing serviced need strong algorithms giving them the maximum
+output rates. Maximum output rates means utilizing maximum number of seats per
+vehicle and in the shortest path travelled. Keeping the paper "Theory and
+Practice in Large Carpooling Problems" by Irith Ben-Arroyo Hartman as our mentor
+paper we proposed our own algorithm to achieve the same.  To work on this
+algorithm, the first requirement is obtaining all the points or nodes for the
+graph; this is done by obtaining the coordinates of the places where people are
+expecting the carpooling service to be obtained.
+
+There are millions of ways and parameters that had to be initially kept to come
+up with this algorithm. Using the osmnx library we were successful in importing
+the map of a particular region. The user interface is easy to work with and the
+points can be easily selected by clicking on the specific region on the map.
+After the cordinates of all the people interested in carpooling have been
+selected we select one destination node. This will be further illustrated in an
+example in the next section.
+
+Using the function call networkx() which works like the Dijkstra algortihm, it
+computes the shortest paths between all the points and gives us a complete
+graph.  After obtaining the complete graph, we now have the distances from all
+points to all other points. This information can be used to calculate the most
+optimized path such that every party is benefited.
+Initial contraints considered:
+\begin{itemize}
+  \item Vehicle capacity - 2 people
+  \item Destination      - 1 common destination
+  \item Threshold value that a person is willing to travel extra to pick up
+    another one - 200m
+\end{itemize}
+
+After the first graph was obtained, the main purpose of the entire thing is to
+find maximal matching. In order to do so, using the triangle inequality, so long
+the distance between the source and the destination when including a new node in
+between does not exceed the threshold value, an edge is drafted between those
+two nodes. This way it checks for all the nodes which can take the other nodes
+along whilst reaching the destination.
+This way our final graph is obtained from which we are interested in obtaining
+the maximal distance. Using the function call to the maximal function we
+eventually get the set of co-ordinates for the calculation of the optimal
+carpooling methodology.
+The following algorithms have been used for the same
+\begin{itemize}
+  \item Dijsktra shortest path
+  \item Filtering algorithm based on Floyd-Warshall algorithm
+  \item Maximal matching usign ``blossom'' and ``primal-dual'' method.
+\end{itemize}
+\end{document}

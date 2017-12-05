@@ -92,7 +92,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
 
         pprint.pprint(pair_dist)
 
-        threshold = 100
+        threshold = 200
         pairs = {}
         compatibility = nx.Graph()
         for key1 in pair_dist:
@@ -111,7 +111,7 @@ class PvalHandlers(gui.handlers.BaseHandlers):
                     pairs[(key1, key2)] = out_of_way
                     compatibility.add_edge(key1, key2, neg_length=-out_of_way)
 
-        print("with out_of_way threshold < 100m")
+        print("With out_of_way threshold <", threshold, "m")
         print("Pairs: out of way distance")
         pprint.pprint(pairs)
 
@@ -130,6 +130,8 @@ class PvalHandlers(gui.handlers.BaseHandlers):
             dist = compatibility.get_edge_data(start, end)['neg_length']
             dist = abs(dist)
             store[start] = store[start][0:3] + [end, dist]
+
+        print("-" * 30)
 
     def pval__alpha_value_changed(self, *args):
         self.pval__refresh()
